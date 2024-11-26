@@ -1,0 +1,88 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - AI Interview App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+        .sidebar {
+            transition: transform 0.3s ease-in-out;
+        }
+        .sidebar-hidden {
+            transform: translateX(-100%);
+        }
+        .watermark {
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        font-size: 14px;
+        color: #555;
+        opacity: 0.7;
+        pointer-events: none; /* Prevent the text from interfering with clicks */
+    }
+    </style>
+</head>
+<body class="bg-gray-100 flex">
+    <aside id="sidebar" class="sidebar w-64 bg-blue-600 text-white min-h-screen p-4 fixed sidebar-hidden">
+        <button id="back-button" class="text-white mb-4">
+            <i class="fas fa-arrow-left text-2xl"></i>
+        </button>
+        <h1 class="text-2xl font-bold mb-6" style="text-align: center;" >VM-SEHGORP</h1>
+        <h1 class="text-2xl font-bold mb-6" style="text-align: center;" >AI Interview App</h1><hr><br>
+        <nav>
+            <ul class="space-y-4">
+                <li><a href="index.html" class="block hover:underline">Home</a></li>
+                <li><a href="interviews.html" class="block hover:underline">Interviews</a></li>
+                <li><a href="about.html" class="block hover:underline">About</a></li>
+                <li><a href="contact.html" class="block hover:underline">Contact</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <div class="flex-1 p-8 ml-0 md:ml-64">
+        <button id="menu-button" class="text-blue-600 mb-4">
+            <i class="fas fa-bars text-2xl"></i>
+        </button>
+        <section class="bg-white p-6 rounded-lg shadow-lg">
+            <h2 class="text-2xl font-bold mb-4">Contact Us</h2>
+            <p class="mb-4">We'd love to hear from you! Whether you have a question about features, pricing, need a demo, or anything else, our team is ready to answer all your questions.</p>
+            <form class="space-y-4">
+                <div>
+                    <label for="name" class="block text-sm font-medium text-gray-700">Your Name</label>
+                    <input type="text" id="name" name="name" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
+                </div>
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
+                    <input type="email" id="email" name="email" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
+                </div>
+                <div>
+                    <label for="message" class="block text-sm font-medium text-gray-700">Message</label>
+                    <textarea id="message" name="message" rows="4" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required></textarea>
+                </div>
+                <button type="submit" class="w-full bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700">Send Message</button>
+            </form>
+        </section>
+    </div>
+
+    <script>
+        const menuButton = document.getElementById('menu-button');
+        const backButton = document.getElementById('back-button');
+        const sidebar = document.getElementById('sidebar');
+
+        menuButton.addEventListener('click', () => {
+            sidebar.classList.toggle('sidebar-hidden');
+        });
+
+        backButton.addEventListener('click', () => {
+            sidebar.classList.add('sidebar-hidden');
+        });
+    </script>
+    <div class="watermark">@Harshvardhan</div>
+
+</body>
+</html>
