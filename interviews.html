@@ -23,14 +23,14 @@
             text-align: center;
         }
         .watermark {
-        position: fixed;
-        bottom: 10px;
-        right: 10px;
-        font-size: 14px;
-        color: #555;
-        opacity: 0.7;
-        pointer-events: none; /* Prevent the text from interfering with clicks */
-    }
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            font-size: 14px;
+            color: #555;
+            opacity: 0.7;
+            pointer-events: none; /* Prevent the text from interfering with clicks */
+        }
     </style>
 </head>
 <body class="bg-gray-100 flex">
@@ -38,8 +38,8 @@
         <button id="back-button" class="text-white mb-4">
             <i class="fas fa-arrow-left text-2xl"></i>
         </button>
-        <h1 class="text-2xl font-bold mb-6" style="text-align: center;" >VM-SEHGORP</h1>
-        <h1 class="text-2xl font-bold mb-6" style="text-align: center;" >AI Interview App</h1><hr><br>
+        <h1 class="text-2xl font-bold mb-6" style="text-align: center;">VM-SEHGORP</h1>
+        <h1 class="text-2xl font-bold mb-6" style="text-align: center;">AI Interview App</h1><hr><br>
 
         <nav>
             <ul class="space-y-4">
@@ -83,9 +83,8 @@
             <h2 class="text-2xl font-bold mb-4">Interview in Progress</h2>
             <div class="text-center text-xl font-semibold" id="timer">3:00</div>
             <div id="current-question" class="large-text mt-6"></div>
-            <div class="flex space-x-4 mt-6">
+            <div class="flex justify-center mt-6">
                 <video id="user-video" class="w-1/2 h-64 bg-gray-200 rounded-lg" autoplay muted></video>
-                <video id="screen-video" class="w-1/2 h-64 bg-gray-200 rounded-lg" autoplay></video>
             </div>
             <button id="end-interview" class="mt-4 w-full bg-red-600 text-white p-2 rounded-md hover:bg-red-700">End Interview</button>
         </section>
@@ -98,16 +97,13 @@
         const interviewForm = document.getElementById('interview-form');
         const interviewSection = document.getElementById('interview-section');
         const userVideo = document.getElementById('user-video');
-        const screenVideo = document.getElementById('screen-video');
         const currentQuestion = document.getElementById('current-question');
         const timerElement = document.getElementById('timer');
         const endInterviewButton = document.getElementById('end-interview');
         const categorySelect = document.getElementById('category');
 
-        let userMediaRecorder, screenMediaRecorder;
+        let userMediaRecorder;
         let userChunks = [];
-        let screenChunks = [];
-        let questions = [];
 
         const questionSets = {
             "Software Development": ["What is polymorphism?", "Explain the concept of OOP.", "What is REST API?"],
@@ -130,25 +126,17 @@
             interviewSection.classList.remove('hidden');
 
             const selectedCategory = categorySelect.value;
-            questions = questionSets[selectedCategory];
+            const questions = questionSets[selectedCategory];
             currentQuestion.textContent = questions[0];
 
-            // Start user video recording
             const userStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
             userVideo.srcObject = userStream;
             userMediaRecorder = new MediaRecorder(userStream);
             userMediaRecorder.ondataavailable = (e) => userChunks.push(e.data);
             userMediaRecorder.start();
 
-            // Start screen recording
-            const screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
-            screenVideo.srcObject = screenStream;
-            screenMediaRecorder = new MediaRecorder(screenStream);
-            screenMediaRecorder.ondataavailable = (e) => screenChunks.push(e.data);
-            screenMediaRecorder.start();
-
             let questionIndex = 1;
-            let remainingTime = 180; // 3 minutes
+            let remainingTime = 180;
 
             const timer = setInterval(() => {
                 if (remainingTime > 0) {
@@ -168,21 +156,17 @@
 
         endInterviewButton.addEventListener('click', () => {
             const userStream = userVideo.srcObject;
-            const screenStream = screenVideo.srcObject;
 
             userStream.getTracks().forEach(track => track.stop());
-            screenStream.getTracks().forEach(track => track.stop());
-
             userMediaRecorder.stop();
-            screenMediaRecorder.stop();
 
-            screenMediaRecorder.onstop = () => {
-                const screenBlob = new Blob(screenChunks, { type: 'video/webm' });
-                const screenUrl = URL.createObjectURL(screenBlob);
-                const screenAnchor = document.createElement('a');
-                screenAnchor.href = screenUrl;
-                screenAnchor.download = 'screen_video.webm';
-                screenAnchor.click();
+            userMediaRecorder.onstop = () => {
+                const userBlob = new Blob(userChunks, { type: 'video/webm' });
+                const userUrl = URL.createObjectURL(userBlob);
+                const userAnchor = document.createElement('a');
+                userAnchor.href = userUrl;
+                userAnchor.download = 'user_video.webm';
+                userAnchor.click();
             };
 
             interviewForm.classList.remove('hidden');
@@ -190,6 +174,5 @@
         });
     </script>
     <div class="watermark">@Harshvardhan</div>
-
 </body>
 </html>
