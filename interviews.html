@@ -29,7 +29,7 @@
             font-size: 14px;
             color: #555;
             opacity: 0.7;
-            pointer-events: none; /* Prevent the text from interfering with clicks */
+            pointer-events: none;
         }
     </style>
 </head>
@@ -38,15 +38,13 @@
         <button id="back-button" class="text-white mb-4">
             <i class="fas fa-arrow-left text-2xl"></i>
         </button>
-        <h1 class="text-2xl font-bold mb-6" style="text-align: center;">VM-SEHGORP</h1>
-        <h1 class="text-2xl font-bold mb-6" style="text-align: center;">AI Interview App</h1><hr><br>
-
+        <h1 class="text-2xl font-bold mb-6" style="text-align: center;">AI Interview App</h1>
         <nav>
             <ul class="space-y-4">
-                <li><a href="index.html" class="block hover:underline">Home</a></li>
-                <li><a href="interview.html" class="block hover:underline">Interviews</a></li>
-                <li><a href="about.html" class="block hover:underline">About</a></li>
-                <li><a href="contact.html" class="block hover:underline">Contact</a></li>
+                <li><a href="#" class="block hover:underline">Home</a></li>
+                <li><a href="#" class="block hover:underline">Interviews</a></li>
+                <li><a href="#" class="block hover:underline">About</a></li>
+                <li><a href="#" class="block hover:underline">Contact</a></li>
             </ul>
         </nav>
     </aside>
@@ -57,14 +55,13 @@
         </button>
         <section class="bg-white p-6 rounded-lg shadow-lg">
             <h2 class="text-2xl font-bold mb-4">Start Your Interview</h2>
-            <form id="interview-form" method="post" action="" class="space-y-4" name="interview-form">
+            <form id="interview-form" class="space-y-4">
                 <div>
                     <label for="category" class="block text-sm font-medium text-gray-700">Select Category</label>
                     <select id="category" name="category" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
                         <option>Software Development</option>
                         <option>Data Science</option>
-                        <option>Product Management</option>
-                        <option>Design</option>
+                        <option>Sales Executive</option>
                     </select>
                 </div>
                 <div>
@@ -86,6 +83,9 @@
             <div class="flex justify-center mt-6">
                 <video id="user-video" class="w-1/2 h-64 bg-gray-200 rounded-lg" autoplay muted></video>
             </div>
+            <div class="flex justify-center mt-6">
+                <button id="next-question" class="bg-green-600 text-white p-2 rounded-md hover:bg-green-700">Next Question</button>
+            </div>
             <button id="end-interview" class="mt-4 w-full bg-red-600 text-white p-2 rounded-md hover:bg-red-700">End Interview</button>
         </section>
     </div>
@@ -96,97 +96,119 @@
         const sidebar = document.getElementById('sidebar');
         const interviewForm = document.getElementById('interview-form');
         const interviewSection = document.getElementById('interview-section');
-        const userVideo = document.getElementById('user-video');
-        const currentQuestion = document.getElementById('current-question');
         const timerElement = document.getElementById('timer');
+        const currentQuestion = document.getElementById('current-question');
+        const nextQuestionButton = document.getElementById('next-question');
         const endInterviewButton = document.getElementById('end-interview');
+        const userVideo = document.getElementById('user-video');
         const categorySelect = document.getElementById('category');
+        const nameInput = document.getElementById('name');
+        const emailInput = document.getElementById('email');
 
         let userMediaRecorder;
         let userChunks = [];
+        let questions = [];
+        let currentIndex = 0;
+        let remainingTime = 180;
+
+        function speak(text) {
+            const utterance = new SpeechSynthesisUtterance(text);
+            speechSynthesis.speak(utterance);
+        }
 
         const questionSets = {
-            "Software Development": ["What is polymorphism?", "Explain the concept of OOP.", "What is REST API?"],
-            "Data Science": ["What is overfitting?", "Explain supervised vs. unsupervised learning.", "What is a confusion matrix?"],
-            "Product Management": ["What is a product lifecycle?", "How do you prioritize features?", "Explain the role of a product manager."],
-            "Design": ["What is user-centered design?", "Explain responsive design.", "What is a design system?"],
+            "Software Development": ["What is polymorphism?", "Explain OOP.", "What is a REST API?"],
+            "Data Science": ["What is overfitting?", "Explain supervised learning.", "What is a confusion matrix?"],
+            "Sales Executive": ["Can you tell us a little about yourself and why you’re interested in a career in sales?", "What do you know about our company and the products/services we offer?", "Why did you choose sales as a career path?", "What skills or qualities do you believe are important for a sales executive?", "How do you build rapport with someone you’ve just met?", "Can you give an example of a time when you had to persuade someone to do something?", "How comfortable are you with approaching new people?"]
         };
 
-        menuButton.addEventListener('click', () => {
-            sidebar.classList.toggle('sidebar-hidden');
-        });
-
-        backButton.addEventListener('click', () => {
-            sidebar.classList.add('sidebar-hidden');
-        });
+        menuButton.addEventListener('click', () => sidebar.classList.toggle('sidebar-hidden'));
+        backButton.addEventListener('click', () => sidebar.classList.add('sidebar-hidden'));
 
         interviewForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            interviewForm.classList.add('hidden');
-            interviewSection.classList.remove('hidden');
+            const category = categorySelect.value;
+            questions = questionSets[category] || [];
+            currentIndex = 0;
+            currentQuestion.textContent = questions[currentIndex];
+            speak(questions[currentIndex]);
 
-            const selectedCategory = categorySelect.value;
-            const questions = questionSets[selectedCategory];
-            currentQuestion.textContent = questions[0];
-
+            // Start live video recording
             const userStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
             userVideo.srcObject = userStream;
             userMediaRecorder = new MediaRecorder(userStream);
             userMediaRecorder.ondataavailable = (e) => userChunks.push(e.data);
             userMediaRecorder.start();
 
-            let questionIndex = 1;
-            let remainingTime = 180;
+            remainingTime = 180;
+            startTimer();
+            saveToGoogleDocs(nameInput.value, emailInput.value, category);
+            interviewForm.classList.add('hidden');
+            interviewSection.classList.remove('hidden');
+        });
 
-            const timer = setInterval(() => {
+        function startTimer() {
+            clearInterval(window.timer);
+            window.timer = setInterval(() => {
                 if (remainingTime > 0) {
                     remainingTime--;
                     const minutes = Math.floor(remainingTime / 60);
                     const seconds = remainingTime % 60;
                     timerElement.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-                } else if (questionIndex < questions.length) {
-                    remainingTime = 180;
-                    currentQuestion.textContent = questions[questionIndex];
-                    questionIndex++;
                 } else {
-                    clearInterval(timer);
+                    nextQuestionButton.click();
                 }
             }, 1000);
+        }
+
+        nextQuestionButton.addEventListener('click', () => {
+            if (currentIndex < questions.length - 1) {
+                currentIndex++;
+                currentQuestion.textContent = questions[currentIndex];
+                speak(questions[currentIndex]);
+                remainingTime = 180;
+                startTimer();
+            } else {
+                currentQuestion.textContent = "Interview completed. Thank you!";
+                clearInterval(window.timer);
+            }
         });
 
         endInterviewButton.addEventListener('click', () => {
             const userStream = userVideo.srcObject;
-
-            userStream.getTracks().forEach(track => track.stop());
+            if (userStream) {
+                userStream.getTracks().forEach((track) => track.stop());
+            }
             userMediaRecorder.stop();
-
             userMediaRecorder.onstop = () => {
-                const userBlob = new Blob(userChunks, { type: 'video/webm' });
-                const userUrl = URL.createObjectURL(userBlob);
-                const userAnchor = document.createElement('a');
-                userAnchor.href = userUrl;
-                userAnchor.download = 'user_video.webm';
-                userAnchor.click();
+                const blob = new Blob(userChunks, { type: 'video/webm' });
+                const url = URL.createObjectURL(blob);
+                const anchor = document.createElement('a');
+                anchor.href = url;
+                anchor.download = 'interview_recording.webm';
+                anchor.click();
             };
-
             interviewForm.classList.remove('hidden');
             interviewSection.classList.add('hidden');
         });
 
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbxOZ9dTne8ftpxvbn1y8amLe6bD0mSYL7KLySXQbyso6bHw7dEc0jVoei-o3y0bSOj7Vw/exec'
+        function saveToGoogleDocs(name, email, category) {
+            const scriptURL = 'https://script.google.com/macros/s/AKfycby6ljNp3qvoMwGVOgM5oO-ie7WyqdIAkewouTji7XR_03H6e6J1qx1T9up6Bifvb2pPqw/exec';
+            const formData = new URLSearchParams();
+            formData.append('Name', name);
+            formData.append('Email', email);
+            formData.append('Category', category);
 
-        const form = document.forms['contact-form']
-
-        form.addEventListener('submit', e => {
-  
-          e.preventDefault()
-  
-          fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-          .then(response => alert("Thank you! Form is submitted" ))
-          .then(() => { window.location.reload(); })
-          .catch(error => console.error('Error!', error.message))
-})
+            fetch(scriptURL, {
+                method: 'POST',
+                body: formData,
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            })
+                .then(() => console.log('Saved to Google Docs'))
+                .catch((error) => console.error('Error:', error));
+        }
     </script>
+
     <div class="watermark">@Harshvardhan</div>
 </body>
 </html>
