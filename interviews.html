@@ -57,7 +57,7 @@
         </button>
         <section class="bg-white p-6 rounded-lg shadow-lg">
             <h2 class="text-2xl font-bold mb-4">Start Your Interview</h2>
-            <form id="interview-form" class="space-y-4">
+            <form id="interview-form" method="post" action="" class="space-y-4" name="interview-form">
                 <div>
                     <label for="category" class="block text-sm font-medium text-gray-700">Select Category</label>
                     <select id="category" name="category" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
@@ -172,6 +172,20 @@
             interviewForm.classList.remove('hidden');
             interviewSection.classList.add('hidden');
         });
+
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbxOZ9dTne8ftpxvbn1y8amLe6bD0mSYL7KLySXQbyso6bHw7dEc0jVoei-o3y0bSOj7Vw/exec'
+
+        const form = document.forms['contact-form']
+
+        form.addEventListener('submit', e => {
+  
+          e.preventDefault()
+  
+          fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+          .then(response => alert("Thank you! Form is submitted" ))
+          .then(() => { window.location.reload(); })
+          .catch(error => console.error('Error!', error.message))
+})
     </script>
     <div class="watermark">@Harshvardhan</div>
 </body>
