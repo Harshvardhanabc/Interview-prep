@@ -74,6 +74,7 @@
         const menuButton = document.getElementById('menu-button');
         const backButton = document.getElementById('back-button');
         const sidebar = document.getElementById('sidebar');
+        const contactForm = document.getElementById('contactForm');
 
         menuButton.addEventListener('click', () => {
             sidebar.classList.toggle('sidebar-hidden');
@@ -81,6 +82,30 @@
 
         backButton.addEventListener('click', () => {
             sidebar.classList.add('sidebar-hidden');
+        });
+
+        // Handle form submission with a popup message
+        contactForm.addEventListener('submit', async (event) => {
+            event.preventDefault(); // Prevent default form submission
+
+            const formData = new FormData(contactForm);
+
+            try {
+                const response = await fetch("https://script.google.com/macros/s/AKfycbyrjh1JBEoLdA9drTaMkARPdsij3ynrTs4NqARyzJFBerku2-nSK2VpCW5HX5OQRwBW/exec", {
+                    method: "POST",
+                    body: formData,
+                });
+
+                const result = await response.text();
+                if (response.ok && result.trim() === "Success") {
+                    alert("Thank you for contacting!");
+                    contactForm.reset(); // Reset the form
+                } else {
+                    alert("Something went wrong: " + result);
+                }
+            } catch (error) {
+                alert("Error: " + error.message);
+            }
         });
     </script>
     <div class="watermark">@Harshvardhan</div>
