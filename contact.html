@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -17,14 +18,14 @@
             transform: translateX(-100%);
         }
         .watermark {
-        position: fixed;
-        bottom: 10px;
-        right: 10px;
-        font-size: 14px;
-        color: #555;
-        opacity: 0.7;
-        pointer-events: none; /* Prevent the text from interfering with clicks */
-    }
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            font-size: 14px;
+            color: #555;
+            opacity: 0.7;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body class="bg-gray-100 flex">
@@ -32,8 +33,9 @@
         <button id="back-button" class="text-white mb-4">
             <i class="fas fa-arrow-left text-2xl"></i>
         </button>
-        <h1 class="text-2xl font-bold mb-6" style="text-align: center;" >VM-SEHGORP</h1>
-        <h1 class="text-2xl font-bold mb-6" style="text-align: center;" >AI Interview App</h1><hr><br>
+        <h1 class="text-2xl font-bold mb-6 text-center">VM-SEHGORP</h1>
+        <h1 class="text-2xl font-bold mb-6 text-center">AI Interview App</h1>
+        <hr><br>
         <nav>
             <ul class="space-y-4">
                 <li><a href="index.html" class="block hover:underline">Home</a></li>
@@ -51,22 +53,21 @@
         <section class="bg-white p-6 rounded-lg shadow-lg">
             <h2 class="text-2xl font-bold mb-4">Contact Us</h2>
             <p class="mb-4">We'd love to hear from you! Whether you have a question about features, pricing, need a demo, or anything else, our team is ready to answer all your questions.</p>
-            <form action="https://script.google.com/macros/s/AKfycbyrjh1JBEoLdA9drTaMkARPdsij3ynrTs4NqARyzJFBerku2-nSK2VpCW5HX5OQRwBW/exec" method="post" class="space-y-4">
-    <div>
-        <label for="name" class="block text-sm font-medium text-gray-700">Your Name</label>
-        <input type="text" id="name" name="name" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
-    </div>
-    <div>
-        <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
-        <input type="email" id="email" name="email" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
-    </div>
-    <div>
-        <label for="message" class="block text-sm font-medium text-gray-700">Message</label>
-        <textarea id="message" name="message" rows="4" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required></textarea>
-    </div>
-    <button type="submit" class="w-full bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700">Send Message</button>
-</form>
-
+            <form id="contactForm" class="space-y-4">
+                <div>
+                    <label for="name" class="block text-sm font-medium text-gray-700">Your Name</label>
+                    <input type="text" id="name" name="name" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
+                </div>
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
+                    <input type="email" id="email" name="email" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
+                </div>
+                <div>
+                    <label for="message" class="block text-sm font-medium text-gray-700">Message</label>
+                    <textarea id="message" name="message" rows="4" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required></textarea>
+                </div>
+                <button type="submit" class="w-full bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700">Send Message</button>
+            </form>
         </section>
     </div>
 
@@ -108,7 +109,7 @@
             }
         });
     </script>
-    <div class="watermark">@Harshvardhan</div>
 
+    <div class="watermark">@Harshvardhan</div>
 </body>
 </html>
