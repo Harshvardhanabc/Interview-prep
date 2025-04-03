@@ -154,7 +154,7 @@
             userMediaRecorder.ondataavailable = (e) => userChunks.push(e.data);
             userMediaRecorder.start();
 
-            remainingTime = 180;
+            remainingTime = 600;
             startTimer();
             saveToGoogleDocs(nameInput.value, emailInput.value, category);
             interviewForm.classList.add('hidden');
