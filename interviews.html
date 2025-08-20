@@ -1,228 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Interview App</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-        }
-        .sidebar {
-            transition: transform 0.3s ease-in-out;
-        }
-        .sidebar-hidden {
-            transform: translateX(-100%);
-        }
-        .large-text {
-            font-size: 2rem;
-            font-weight: bold;
-            text-align: center;
-        }
-        .watermark {
-            position: fixed;
-            bottom: 10px;
-            right: 10px;
-            font-size: 14px;
-            color: #555;
-            opacity: 0.7;
-            pointer-events: none;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Interview Categories</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f4f4f9;
+    }
+    header {
+      background: #333;
+      color: #fff;
+      text-align: center;
+      padding: 1rem;
+    }
+    h1 {
+      margin: 0;
+    }
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+    .card {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    }
+    .form-container {
+      display: none;
+      text-align: center;
+      margin-top: 30px;
+    }
+    form {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      display: inline-block;
+    }
+    input, button {
+      display: block;
+      margin: 10px auto;
+      padding: 10px;
+      width: 250px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+    button {
+      background: #333;
+      color: #fff;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #444;
+    }
+  </style>
 </head>
-<body class="bg-gray-100 flex">
-    <aside id="sidebar" class="sidebar w-64 bg-blue-600 text-white min-h-screen p-4 fixed sidebar-hidden">
-        <button id="back-button" class="text-white mb-4">
-            <i class="fas fa-arrow-left text-2xl"></i>
-        </button>
-        <h1 class="text-2xl font-bold mb-6" style="text-align: center;">AI Interview App</h1>
-        <nav>
-            <ul class="space-y-4">
-                <li><a href="index.html" class="block hover:underline">Home</a></li>
-                <li><a href="interviews.html" class="block hover:underline">Interviews</a></li>
-                <li><a href="about.html" class="block hover:underline">About</a></li>
-                <li><a href="contact.html" class="block hover:underline">Contact</a></li>
-            </ul>
-        </nav>
-    </aside>
+<body>
+  <header>
+    <h1>Interview Categories</h1>
+  </header>
 
-    <div class="flex-1 p-8 ml-0 md:ml-64">
-        <button id="menu-button" class="text-blue-600 mb-4">
-            <i class="fas fa-bars text-2xl"></i>
-        </button>
-        <section class="bg-white p-6 rounded-lg shadow-lg">
-            <h2 class="text-2xl font-bold mb-4">Start Your Interview</h2>
-            <form id="interview-form" class="space-y-4">
-                <div>
-                    <label for="category" class="block text-sm font-medium text-gray-700">Select Category</label>
-                    <select id="category" name="category" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
-                        <option>Introduction</option>
-                        <option>Software Development</option>
-                        <option>Data Science</option>
-                        <option>Sales Executive</option>
-                        <option>Data Structures and Algorithms</option>
-                        <option>Object-Oriented Programming</option>
-                        <option>Machine Learning Basics</option>
-                        <option>Deep Learning</option>
-                        <option>Natural Language Processing</option>
-                        <option>AI</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="name" class="block text-sm font-medium text-gray-700">Your Name</label>
-                    <input type="text" id="name" name="name" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
-                </div>
-                <div>
-                    <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
-                    <input type="email" id="email" name="email" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
-                </div>
-                <button type="submit" class="w-full bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700">Start Interview</button>
-            </form>
-        </section>
+  <div class="container" id="categoryContainer">
+    <!-- Cards dynamically added here -->
+  </div>
 
-        <section id="interview-section" class="hidden mt-8 bg-white p-6 rounded-lg shadow-lg">
-            <h2 class="text-2xl font-bold mb-4">Interview in Progress</h2>
-            <div class="text-center text-xl font-semibold" id="timer">3:00</div>
-            <div id="current-question" class="large-text mt-6"></div>
-            <div class="flex justify-center mt-6">
-                <video id="user-video" class="w-1/2 h-64 bg-gray-200 rounded-lg" autoplay muted></video>
-            </div>
-            <div class="flex justify-center mt-6">
-                <button id="next-question" class="bg-green-600 text-white p-2 rounded-md hover:bg-green-700">Next Question</button>
-            </div>
-            <button id="end-interview" class="mt-4 w-full bg-red-600 text-white p-2 rounded-md hover:bg-red-700">End Interview</button>
-        </section>
-    </div>
+  <div class="form-container" id="formContainer">
+    <h2 id="selectedCategory"></h2>
+    <form id="candidateForm">
+      <input type="text" id="name" name="name" placeholder="Enter your name" required>
+      <input type="email" id="email" name="email" placeholder="Enter your email" required>
+      <button type="submit">Start Interview</button>
+    </form>
+  </div>
 
-    <script>
-        const menuButton = document.getElementById('menu-button');
-        const backButton = document.getElementById('back-button');
-        const sidebar = document.getElementById('sidebar');
-        const interviewForm = document.getElementById('interview-form');
-        const interviewSection = document.getElementById('interview-section');
-        const timerElement = document.getElementById('timer');
-        const currentQuestion = document.getElementById('current-question');
-        const nextQuestionButton = document.getElementById('next-question');
-        const endInterviewButton = document.getElementById('end-interview');
-        const userVideo = document.getElementById('user-video');
-        const categorySelect = document.getElementById('category');
-        const nameInput = document.getElementById('name');
-        const emailInput = document.getElementById('email');
+  <script>
+    // Categories (same as Google Sheets categories)
+    const categories = ["Java", "Python", "C++", "HR", "SQL"];
 
-        let userMediaRecorder;
-        let userChunks = [];
-        let questions = [];
-        let currentIndex = 0;
-        let remainingTime = 600;
+    const container = document.getElementById("categoryContainer");
+    const formContainer = document.getElementById("formContainer");
+    const selectedCategoryHeading = document.getElementById("selectedCategory");
+    let chosenCategory = "";
 
-        function speak(text) {
-            const utterance = new SpeechSynthesisUtterance(text);
-            speechSynthesis.speak(utterance);
-        }
+    // Create category cards
+    categories.forEach(cat => {
+      const card = document.createElement("div");
+      card.classList.add("card");
+      card.innerText = cat;
+      card.onclick = () => {
+        chosenCategory = cat;
+        selectedCategoryHeading.innerText = `Selected Category: ${cat}`;
+        formContainer.style.display = "block";
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+      };
+      container.appendChild(card);
+    });
 
-        const questionSets = {
-            "Software Development": ["What is polymorphism?", "Explain OOP.", "What is a REST API?"],
-            "Data Science": ["What is overfitting?", "Explain supervised learning.", "What is a confusion matrix?"],
-            "Sales Executive": ["Can you tell us a little about yourself and why you’re interested in a career in sales?", "What do you know about our company and the products/services we offer?", "Why did you choose sales as a career path?", "What skills or qualities do you believe are important for a sales executive?", "How do you build rapport with someone you’ve just met?", "Can you give an example of a time when you had to persuade someone to do something?", "How comfortable are you with approaching new people?"],
-            "Data Structures and Algorithms": ["What is an array, and how is it different from a linked list?", "Explain the concept of dynamic programming. How does it differ from recursion?","What is a stack, and where is it used?","What is the difference between BFS and DFS in graph traversal?","What are the advantages of a binary search tree (BST)?","What is the difference between merge sort and quick sort?","What is hashing, and how does it work?","What are the key differences between a greedy algorithm and dynamic programming?","What is a priority queue, and how is it implemented?","What is a spanning tree, and how is it different from a minimum spanning tree?","Explain the concept of time complexity with examples.","What is the difference between linear search and binary search?","What is a graph, and how is it represented in memory?","What is a circular queue, and how does it solve the limitations of a normal queue?","What are the properties of a red-black tree?"],
-            "Object-Oriented Programming": ["What are the four main principles of OOP, and how do they work?","What is the difference between a class and an object in OOP?","What is encapsulation, and how does it improve code security?","What is inheritance in OOP? Explain its types with examples.","What is polymorphism, and how is it implemented in OOP?","What is the difference between method overloading and method overriding?","What is abstraction, and how is it different from encapsulation?","What are access modifiers in OOP? Explain their importance.","What is the difference between an interface and an abstract class?","What is a constructor in OOP, and why is it used?","What is the difference between shallow copy and deep copy in OOP?","What is the purpose of the ‘this’ keyword in OOP?","What is a static method in OOP? How does it differ from an instance method?","What is the difference between composition and aggregation in OOP?","What are design patterns in OOP? Explain the singleton design pattern."],
-            "Machine Learning Basics": ["What is machine learning, and how does it differ from traditional programming?","What are the different types of machine learning? Explain with examples.","What is the difference between supervised and unsupervised learning?","What are features and labels in a dataset?","What is overfitting in machine learning, and how can it be avoided?","What is underfitting in machine learning, and how does it impact model performance?","What is the difference between classification and regression?","What is a confusion matrix, and how is it used to evaluate a classification model?","What are precision, recall, and F1-score? How are they calculated?","What is a training set, validation set, and test set? Why are they important?","What is cross-validation, and why is it used in machine learning?","What is the bias-variance tradeoff in machine learning?","What is feature scaling, and why is it important in ML models?","What are hyperparameters in machine learning, and how are they optimized?","What is the difference between bagging and boosting in ensemble methods?"],
-            "Deep Learning": ["What is deep learning, and how does it differ from traditional machine learning?","What are artificial neural networks (ANNs), and how do they work?","What is the difference between a perceptron and a multi-layer perceptron (MLP)?","What are activation functions in deep learning, and why are they important?","What is the difference between supervised learning and unsupervised learning in deep learning?","What are convolutional neural networks (CNNs), and where are they used?","What are recurrent neural networks (RNNs), and how do they differ from CNNs?","What is backpropagation, and how does it work in training neural networks?","What is gradient descent, and what are its variants used in deep learning?","What is overfitting in deep learning, and how can it be prevented?","What are dropouts, and how do they help in preventing overfitting?","What is transfer learning, and why is it useful in deep learning?","What is the role of epochs, batch size, and learning rate in training deep learning models?","What are autoencoders, and how are they used in deep learning?","What is the difference between generative and discriminative models in deep learning?"],
-            "Natural Language Processing": ["What is Natural Language Processing, and why is it important?","What are the key components of Natural Language Processing?","What is the difference between tokenization and stemming?","What is lemmatization, and how is it different from stemming?","What is a Bag of Words (BoW) model in NLP?","What are word embeddings, and how do they improve NLP tasks?","What is the difference between TF-IDF and Word2Vec?","What is part-of-speech (POS) tagging, and why is it important in NLP?","What is Named Entity Recognition (NER), and how is it used in NLP?","What is sentiment analysis, and how does it work?","What is the difference between statistical NLP and deep learning-based NLP?","What is the role of attention mechanisms in NLP?","What are transformers in NLP, and how do they differ from RNNs?","What is the difference between machine translation and transliteration?","What is natural language generation (NLG), and how does it differ from natural language understanding (NLU)?"],
-            "AI": ["What is Artificial Intelligence, and how does it differ from Machine Learning?","What are the key components of an AI system?","What are the different types of AI: narrow, general, and super AI?","What is the Turing Test, and how does it measure AI intelligence?","What is the difference between symbolic AI and connectionist AI?","What is an expert system, and where is it used?","What is reinforcement learning, and how does it differ from supervised learning?","What are the ethical challenges associated with AI?","What is the difference between strong AI and weak AI?","What are some real-world applications of AI in different industries?","What is the role of Natural Language Processing (NLP) in AI?","What is the importance of data in building AI systems?","What is a neural network, and how is it related to AI?","What is explainable AI (XAI), and why is it important?","What is the difference between deterministic and non-deterministic AI systems?"],
-            "Introduction": ["Can you tell me a little about yourself?"]
-        };
+    // Handle form submit
+    document.getElementById("candidateForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
 
-        menuButton.addEventListener('click', () => sidebar.classList.toggle('sidebar-hidden'));
-        backButton.addEventListener('click', () => sidebar.classList.add('sidebar-hidden'));
-
-        interviewForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const category = categorySelect.value;
-            questions = questionSets[category] || [];
-            currentIndex = 0;
-            currentQuestion.textContent = questions[currentIndex];
-            speak(questions[currentIndex]);
-
-            // Start live video recording
-            const userStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-            userVideo.srcObject = userStream;
-            userMediaRecorder = new MediaRecorder(userStream);
-            userMediaRecorder.ondataavailable = (e) => userChunks.push(e.data);
-            userMediaRecorder.start();
-
-            remainingTime = 600;
-            startTimer();
-            saveToGoogleDocs(nameInput.value, emailInput.value, category);
-            interviewForm.classList.add('hidden');
-            interviewSection.classList.remove('hidden');
-        });
-
-        function startTimer() {
-            clearInterval(window.timer);
-            window.timer = setInterval(() => {
-                if (remainingTime > 0) {
-                    remainingTime--;
-                    const minutes = Math.floor(remainingTime / 60);
-                    const seconds = remainingTime % 60;
-                    timerElement.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-                } else {
-                    nextQuestionButton.click();
-                }
-            }, 1000);
-        }
-
-        nextQuestionButton.addEventListener('click', () => {
-            if (currentIndex < questions.length - 1) {
-                currentIndex++;
-                currentQuestion.textContent = questions[currentIndex];
-                speak(questions[currentIndex]);
-                remainingTime = 600;
-                startTimer();
-            } else {
-                currentQuestion.textContent = "Interview completed. Thank you!";
-                clearInterval(window.timer);
-            }
-        });
-
-        endInterviewButton.addEventListener('click', () => {
-            const userStream = userVideo.srcObject;
-            if (userStream) {
-                userStream.getTracks().forEach((track) => track.stop());
-            }
-            userMediaRecorder.stop();
-            userMediaRecorder.onstop = () => {
-                const blob = new Blob(userChunks, { type: 'video/webm' });
-                const url = URL.createObjectURL(blob);
-                const anchor = document.createElement('a');
-                anchor.href = url;
-                anchor.download = 'interview_recording.webm';
-                anchor.click();
-            };
-            interviewForm.classList.remove('hidden');
-            interviewSection.classList.add('hidden');
-        });
-
-        function saveToGoogleDocs(name, email, category) {
-            const scriptURL = 'https://script.google.com/macros/s/AKfycby6ljNp3qvoMwGVOgM5oO-ie7WyqdIAkewouTji7XR_03H6e6J1qx1T9up6Bifvb2pPqw/exec';
-            const formData = new URLSearchParams();
-            formData.append('Name', name);
-            formData.append('Email', email);
-            formData.append('Category', category);
-
-            fetch(scriptURL, {
-                method: 'POST',
-                body: formData,
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            })
-                .then(() => console.log('Saved to Google Docs'))
-                .catch((error) => console.error('Error:', error));
-        }
-    </script>
-
-    <div class="watermark">@Harshvardhan</div>
+      // Save to Google Sheets using your backend (Apps Script / PHP endpoint)
+      fetch("https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec", {
+        method: "POST",
+        body: new URLSearchParams({ name, email, category: chosenCategory })
+      })
+      .then(res => res.text())
+      .then(() => {
+        // Redirect to interview questions page with category
+        window.location.href = `questions.html?category=${encodeURIComponent(chosenCategory)}`;
+      });
+    });
+  </script>
 </body>
 </html>
