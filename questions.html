@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Interview Questions</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f4f4f9;
+      text-align: center;
+    }
+    header {
+      background: #333;
+      color: #fff;
+      padding: 1rem;
+    }
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    h2 {
+      margin-bottom: 10px;
+    }
+    #timer {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+    #current-question {
+      font-size: 1.4rem;
+      font-weight: bold;
+      margin: 20px 0;
+    }
+    video {
+      margin: 15px auto;
+      display: block;
+      width: 70%;
+      max-width: 500px;
+      height: 300px;
+      background: #eee;
+      border-radius: 12px;
+    }
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    #next-question {
+      background: #28a745;
+      color: #fff;
+    }
+    #next-question:hover {
+      background: #218838;
+    }
+    #end-interview {
+      background: #dc3545;
+      color: #fff;
+    }
+    #end-interview:hover {
+      background: #c82333;
+    }
+    .watermark {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      font-size: 14px;
+      color: #555;
+      opacity: 0.7;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Interview in Progress</h1>
+  </header>
+
+  <div class="container">
+    <h2 id="categoryHeading"></h2>
+    <div id="timer">3:00</div>
+    <div id="current-question"></div>
+
+    <video id="user-video" autoplay muted></video>
+
+    <div>
+      <button id="next-question">Next Question</button>
+      <button id="end-interview">End Interview</button>
+    </div>
+  </div>
+
+  <div class="watermark">@Harshvardhan</div>
+
+  <script>
+    // ✅ Extract category from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const category = urlParams.get("category") || "Introduction";
+    document.getElementById("categoryHeading").innerText = "Category: " + category;
+
+    // ✅ Question bank (same as before)
+    const questionSets = {
+      "Software Development": ["What is polymorphism?", "Explain OOP.", "What is a REST API?"],
+      "Data Science": ["What is overfitting?", "Explain supervised learning.", "What is a confusion matrix?"],
+      "Sales Executive": ["Can you tell us a little about yourself?", "What do you know about our company?", "Why sales career?"],
+      "Data Structures and Algorithms": ["What is an array?", "Explain dynamic programming.", "What is BFS vs DFS?"],
+      "Object-Oriented Programming": ["What are 4 principles of OOP?", "What is encapsulation?", "What is polymorphism?"],
+      "Machine Learning Basics": ["What is ML?", "Types of ML?", "What is supervised vs unsupervised learning?"],
+      "Deep Learning": ["What is deep learning?", "What is a neural network?", "What is backpropagation?"],
+      "Natural Language Processing": ["What is NLP?", "What is tokenization?", "What are word embeddings?"],
+      "AI": ["What is AI?", "Types of AI?", "What is the Turing Test?"],
+      "Introduction": ["Can you tell me a little about yourself?"]
+    };
+
+    let questions = questionSets[category] || ["Default Question"];
+    let currentIndex = 0;
+    let remainingTime = 180; // 3 min per question
+    let timer;
+    const timerElement = document.getElementById("timer");
+    const questionElement = document.getElementById("current-question");
+
+    // ✅ Setup video recording
+    const userVideo = document.getElementById("user-video");
+    let mediaRecorder;
+    let chunks = [];
+
+    async function initVideo() {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+      userVideo.srcObject = stream;
+      mediaRecorder = new MediaRecorder(stream);
+      mediaRecorder.ondataavailable = e => chunks.push(e.data);
+      mediaRecorder.start();
+    }
+
+    // ✅ Speak question aloud
+    function speak(text) {
+      const utter = new SpeechSynthesisUtterance(text);
+      speechSynthesis.speak(utter);
+    }
+
+    // ✅ Show first question
+    function showQuestion() {
+      questionElement.innerText = questions[currentIndex];
+      speak(questions[currentIndex]);
+      remainingTime = 180;
+      startTimer();
+    }
+
+    // ✅ Timer logic
+    function startTimer() {
+      clearInterval(timer);
+      timer = setInterval(() => {
+        if (remainingTime > 0) {
+          remainingTime--;
+          const min = Math.floor(remainingTime / 60);
+          const sec = remainingTime % 60;
+          timerElement.innerText = `${min}:${sec < 10 ? "0" : ""}${sec}`;
+        } else {
+          nextQuestion();
+        }
+      }, 1000);
+    }
+
+    // ✅ Next Question button
+    function nextQuestion() {
+      if (currentIndex < questions.length - 1) {
+        currentIndex++;
+        showQuestion();
+      } else {
+        questionElement.innerText = "Interview Completed. Thank you!";
+        clearInterval(timer);
+      }
+    }
+
+    // ✅ End Interview button
+    function endInterview() {
+      clearInterval(timer);
+      mediaRecorder.stop();
+      mediaRecorder.onstop = () => {
+        const blob = new Blob(chunks, { type: "video/webm" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "interview_recording.webm";
+        a.click();
+      };
+      alert("Interview Ended. Your recording has been saved.");
+      window.location.href = "index.html"; // back to home
+    }
+
+    // ✅ Event Listeners
+    document.getElementById("next-question").addEventListener("click", nextQuestion);
+    document.getElementById("end-interview").addEventListener("click", endInterview);
+
+    // ✅ Init interview
+    initVideo().then(() => {
+      showQuestion();
+    });
+  </script>
+</body>
+</html>
