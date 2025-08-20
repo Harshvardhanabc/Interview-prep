@@ -1,96 +1,80 @@
+<!DOCTYPE html>
 <html lang="en">
- <head>
+<head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <title>
-   AI Interview App
-  </title>
-  <script src="https://cdn.tailwindcss.com">
-  </script>
+  <title>AI Interview App - Home</title>
+  <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"/>
   <style>
-   body {
-            font-family: 'Roboto', sans-serif;
-        }
-        .sidebar {
-            transition: transform 0.3s ease-in-out;
-        }
-        .sidebar-hidden {
-            transform: translateX(-100%);
-        }
-        .watermark {
-        position: fixed;
-        bottom: 10px;
-        right: 10px;
-        font-size: 14px;
-        color: #555;
-        opacity: 0.7;
-        pointer-events: none; /* Prevent the text from interfering with clicks */
+    body { font-family: 'Roboto', sans-serif; }
+    .gradient-bg {
+      background: linear-gradient(135deg, #1e1b4b, #0f172a, #1e293b);
+    }
+    .watermark {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      font-size: 14px;
+      color: #ddd;
+      opacity: 0.7;
+      pointer-events: none;
     }
   </style>
- </head>
- <body class="bg-gray-100 flex">
-  <aside class="sidebar w-64 bg-blue-600 text-white min-h-screen p-4 fixed sidebar-hidden" id="sidebar">
-   <button class="text-white mb-4" id="back-button">
-    <i class="fas fa-arrow-left text-2xl">
-    </i>
-   </button>
-   <h1 class="text-2xl font-bold mb-6" style="text-align: center;" >VM-SEHGORP</h1>
-        <h1 class="text-2xl font-bold mb-6" style="text-align: center;" >AI Interview App</h1><hr><br>
-   <nav>
-    <ul class="space-y-4">
-     <li>
-      <a class="block hover:underline" href="index.html">
-       Home
-      </a>
-     </li>
-     <li>
-      <a class="block hover:underline" href="interviews.html">
-       Interviews
-      </a>
-     </li>
-     <li>
-      <a class="block hover:underline" href="about.html">
-       About
-      </a>
-     </li>
-     <li>
-      <a class="block hover:underline" href="contact.html">
-       Contact
-      </a>
-     </li>
-    </ul>
-   </nav>
-  </aside>
-  <div class="flex-1 p-8 ml-0 md:ml-64">
-   <button class="text-blue-600 mb-4" id="menu-button">
-    <i class="fas fa-bars text-2xl">
-    </i>
-   </button>
-   <section class="bg-white p-6 rounded-lg shadow-lg">
-    <h2 class="text-2xl font-bold mb-4">
-     Welcome to AI Interview App
+</head>
+<body class="gradient-bg text-white">
+
+  <!-- Navbar -->
+  <header class="flex justify-between items-center p-6 max-w-7xl mx-auto">
+    <h1 class="text-2xl font-bold">AI Interview App</h1>
+    <nav class="space-x-6 hidden md:flex">
+      <a href="index.html" class="hover:underline">Home</a>
+      <a href="interviews.html" class="hover:underline">Interviews</a>
+      <a href="questions.html" class="hover:underline">Questions</a>
+      <a href="about.html" class="hover:underline">About</a>
+      <a href="contact.html" class="hover:underline">Contact</a>
+    </nav>
+    <a href="signup.html" class="px-4 py-2 border border-white rounded-lg hover:bg-white hover:text-black transition">Get Started</a>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="flex flex-col items-center justify-center text-center min-h-screen px-6">
+    <h2 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
+      Unlock Your Potential,  
+      <span class="text-yellow-400">Ace Every Interview</span>
     </h2>
-    <p class="mb-4">
-     This app helps you conduct online interviews using AI and records both video and screen of the user. Get started by navigating through the menu.
+    <p class="text-lg md:text-xl max-w-2xl text-gray-300 mb-8">
+      Believe in yourself and let technology guide you.  
+      With smart preparation, every challenge becomes an opportunity, and every interview is your chance to shine.
     </p>
-    <img alt="Illustration of an AI-powered interview process" class="w-full rounded-lg shadow-lg" height="400" src="https://storage.googleapis.com/a1aa/image/1xNM3K4wDey6KKGTefPjRQpUAf5vMT32zD5cPxsQs6AIpeleE.jpg" width="600"/>
-   </section>
-  </div>
-  <script>
-   const menuButton = document.getElementById('menu-button');
-        const backButton = document.getElementById('back-button');
-        const sidebar = document.getElementById('sidebar');
+    <div class="flex gap-4">
+      <a href="interviews.html" class="px-6 py-3 bg-yellow-400 text-black font-semibold rounded-lg shadow hover:bg-yellow-300 transition">
+        Start Practicing
+      </a>
+      <a href="contact.html" class="px-6 py-3 border border-yellow-400 text-yellow-400 font-semibold rounded-lg hover:bg-yellow-400 hover:text-black transition">
+        Contact Us
+      </a>
+    </div>
+  </section>
 
-        menuButton.addEventListener('click', () => {
-            sidebar.classList.toggle('sidebar-hidden');
-        });
+  <!-- Motivation Section -->
+  <section class="bg-white text-black py-16 px-6 text-center">
+    <h3 class="text-3xl md:text-4xl font-bold mb-4">Your Future Starts Today</h3>
+    <p class="max-w-3xl mx-auto text-lg text-gray-600 mb-8">
+      Every great journey begins with preparation. Our AI-powered platform helps you practice, learn, and grow so you can step into any interview with confidence.
+    </p>
+    <a href="interviews.html" class="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow hover:bg-blue-500 transition">
+      Join Now – It’s Free
+    </a>
+  </section>
 
-        backButton.addEventListener('click', () => {
-            sidebar.classList.add('sidebar-hidden');
-        });
-  </script>
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-gray-400 text-center py-6">
+    <p>&copy; 2025 AI Interview App. All rights reserved.</p>
+  </footer>
+
+  <!-- Watermark -->
   <div class="watermark">@Harshvardhan</div>
- </body>
+</body>
 </html>
