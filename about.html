@@ -1,100 +1,81 @@
+<!DOCTYPE html>
 <html lang="en">
- <head>
+<head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <title>
-   About - AI Interview App
-  </title>
-  <script src="https://cdn.tailwindcss.com">
-  </script>
+  <title>AI Interview App - About</title>
+  <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"/>
   <style>
-   body {
-            font-family: 'Roboto', sans-serif;
-        }
-        .sidebar {
-            transition: transform 0.3s ease-in-out;
-        }
-        .sidebar-hidden {
-            transform: translateX(-100%);
-        }
-        .watermark {
-        position: fixed;
-        bottom: 10px;
-        right: 10px;
-        font-size: 14px;
-        color: #555;
-        opacity: 0.7;
-        pointer-events: none; /* Prevent the text from interfering with clicks */
+    body { font-family: 'Roboto', sans-serif; }
+    .gradient-bg {
+      background: linear-gradient(135deg, #1e1b4b, #0f172a, #1e293b);
+    }
+    .watermark {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      font-size: 14px;
+      color: #ddd;
+      opacity: 0.7;
+      pointer-events: none;
     }
   </style>
- </head>
- <body class="bg-gray-100 flex">
-  <aside class="sidebar w-64 bg-blue-600 text-white min-h-screen p-4 fixed sidebar-hidden" id="sidebar">
-   <button class="text-white mb-4" id="back-button">
-    <i class="fas fa-arrow-left text-2xl">
-    </i>
-   </button>
-   <h1 class="text-2xl font-bold mb-6" style="text-align: center;" >VM-SEHGORP</h1>
-        <h1 class="text-2xl font-bold mb-6" style="text-align: center;" >AI Interview App</h1><hr><br>
-   <nav>
-    <ul class="space-y-4">
-     <li>
-      <a class="block hover:underline" href="index.html">
-       Home
-      </a>
-     </li>
-     <li>
-      <a class="block hover:underline" href="interviews.html">
-       Interviews
-      </a>
-     </li>
-     <li>
-      <a class="block hover:underline" href="about.html">
-       About
-      </a>
-     </li>
-     <li>
-      <a class="block hover:underline" href="contact.html">
-       Contact
-      </a>
-     </li>
-    </ul>
-   </nav>
-  </aside>
-  <div class="flex-1 p-8 ml-0 md:ml-64">
-   <button class="text-blue-600 mb-4" id="menu-button">
-    <i class="fas fa-bars text-2xl">
-    </i>
-   </button>
-   <section class="bg-white p-6 rounded-lg shadow-lg">
-    <h2 class="text-2xl font-bold mb-4">
-     About AI Interview App
+</head>
+<body class="gradient-bg text-white">
+
+  <!-- Navbar -->
+  <header class="flex justify-between items-center p-6 max-w-7xl mx-auto">
+    <h1 class="text-2xl font-bold">AI Interview App</h1>
+    <nav class="space-x-6 hidden md:flex">
+      <a href="index.html" class="hover:underline">Home</a>
+      <a href="interviews.html" class="hover:underline">Interviews</a>
+      <a href="about.html" class="hover:underline">About</a>
+      <a href="contact.html" class="hover:underline">Contact</a>
+    </nav>
+    <a href="signup.html" class="px-4 py-2 border border-white rounded-lg hover:bg-white hover:text-black transition">Get Started</a>
+  </header>
+
+  <!-- About Section -->
+  <section class="flex flex-col items-center justify-center text-center min-h-screen px-6">
+    <h2 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
+      About <span class="text-yellow-400">Our Vision</span>
     </h2>
-    <p class="mb-4">
-     The AI Interview App is designed to streamline the interview process by leveraging artificial intelligence. Our app allows you to conduct online interviews, record both video and screen of the user, and provide insightful analytics to help you make informed decisions.
+    <p class="text-lg md:text-xl max-w-3xl text-gray-300 mb-8">
+      At <strong>AI Interview App</strong>, we believe hiring should be 
+      <span class="text-yellow-400 font-semibold">smart, fair, and efficient</span>.  
+      Our AI-driven platform helps companies discover the right talent while giving candidates the confidence to shine without bias.
     </p>
-    <p class="mb-4">
-     Our mission is to make the interview process more efficient and effective for both interviewers and candidates. By using AI, we can provide a more consistent and unbiased evaluation of candidates, ensuring that you find the best fit for your team.
+    <p class="text-lg md:text-xl max-w-3xl text-gray-300 mb-12">
+      We’re not just building an interview tool — we’re creating a future where technology 
+      <span class="text-yellow-400 font-semibold">empowers people</span> to unlock their full potential.
     </p>
-    <img alt="Illustration of AI technology enhancing the interview process" class="w-full rounded-lg shadow-lg" height="400" src="https://storage.googleapis.com/a1aa/image/xffJUlKFKNihHkhhDiNw8glYH8IldfjTbhz1Hon97De6seleE.jpg" width="600"/>
-   </section>
-  </div>
-  <script>
-   const menuButton = document.getElementById('menu-button');
-        const backButton = document.getElementById('back-button');
-        const sidebar = document.getElementById('sidebar');
+    <img src="https://images.unsplash.com/photo-1504805572947-34fad45aed93?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8aW5zcGlyYXRpb258ZW58MHx8MHx8fDA%3D" 
+         alt="AI Interview illustration" 
+         class="w-full max-w-2xl rounded-lg shadow-lg"/>
+         <br>
+  </section>
 
-        menuButton.addEventListener('click', () => {
-            sidebar.classList.toggle('sidebar-hidden');
-        });
+  <!-- Mission Section -->
+  <section class="bg-white text-black py-16 px-6 text-center">
+    <h3 class="text-3xl md:text-4xl font-bold mb-4">Our Mission</h3>
+    <p class="max-w-3xl mx-auto text-lg text-gray-600 mb-8">
+      To make interview preparation and recruitment more accessible, unbiased, and effective.  
+      Whether you’re a candidate preparing for your dream job or a recruiter searching for top talent, 
+      our platform is designed to support you at every step.
+    </p>
+    <a href="interviews.html" class="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow hover:bg-blue-500 transition">
+      Get Started Today
+    </a>
+  </section>
 
-        backButton.addEventListener('click', () => {
-            sidebar.classList.add('sidebar-hidden');
-        });
-  </script>
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-gray-400 text-center py-6">
+    <p>&copy; 2025 AI Interview App. All rights reserved.</p>
+  </footer>
+
+  <!-- Watermark -->
   <div class="watermark">@Harshvardhan</div>
-
- </body>
+</body>
 </html>
