@@ -141,7 +141,7 @@
       const email = document.getElementById("email").value;
 
       // Save to Google Sheets
-      fetch("https://script.google.com/macros/s/AKfycby6ljNp3qvoMwGVOgM5oO-ie7WyqdIAkewouTji7XR_03H6e6J1qx1T9up6Bifvb2pPqw/exec", {
+      fetch("https://script.google.com/macros/s/AKfycbwZaWro7b9t5BeZgwjnN-muEKuQamRw9sNYETIEMzLHuVXSWsKiMUB0RRsVDg4cNoCU/exec", {
         method: "POST",
         body: new URLSearchParams({ Name: name, Email: email, Category: chosenCategory })
       })
