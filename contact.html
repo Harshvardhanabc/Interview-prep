@@ -1,115 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact - AI Interview App</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-        }
-        .sidebar {
-            transition: transform 0.3s ease-in-out;
-        }
-        .sidebar-hidden {
-            transform: translateX(-100%);
-        }
-        .watermark {
-            position: fixed;
-            bottom: 10px;
-            right: 10px;
-            font-size: 14px;
-            color: #555;
-            opacity: 0.7;
-            pointer-events: none;
-        }
-    </style>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Contact - AI Interview App</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"/>
+  <style>
+    body { font-family: 'Roboto', sans-serif; }
+    .gradient-bg {
+      background: linear-gradient(135deg, #1e1b4b, #0f172a, #1e293b);
+    }
+    .watermark {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      font-size: 14px;
+      color: #ddd;
+      opacity: 0.7;
+      pointer-events: none;
+    }
+  </style>
 </head>
-<body class="bg-gray-100 flex">
-    <aside id="sidebar" class="sidebar w-64 bg-blue-600 text-white min-h-screen p-4 fixed sidebar-hidden">
-        <button id="back-button" class="text-white mb-4">
-            <i class="fas fa-arrow-left text-2xl"></i>
-        </button>
-        <h1 class="text-2xl font-bold mb-6 text-center">VM-SEHGORP</h1>
-        <h1 class="text-2xl font-bold mb-6 text-center">AI Interview App</h1>
-        <hr><br>
-        <nav>
-            <ul class="space-y-4">
-                <li><a href="index.html" class="block hover:underline">Home</a></li>
-                <li><a href="interviews.html" class="block hover:underline">Interviews</a></li>
-                <li><a href="about.html" class="block hover:underline">About</a></li>
-                <li><a href="contact.html" class="block hover:underline">Contact</a></li>
-            </ul>
-        </nav>
-    </aside>
+<body class="gradient-bg text-white">
 
-    <div class="flex-1 p-8 ml-0 md:ml-64">
-        <button id="menu-button" class="text-blue-600 mb-4">
-            <i class="fas fa-bars text-2xl"></i>
+  <!-- Navbar -->
+  <header class="flex justify-between items-center p-6 max-w-7xl mx-auto">
+    <h1 class="text-2xl font-bold">AI Interview App</h1>
+    <nav class="space-x-6 hidden md:flex">
+      <a href="index.html" class="hover:underline">Home</a>
+      <a href="interviews.html" class="hover:underline">Interviews</a>
+      <a href="about.html" class="hover:underline">About</a>
+      <a href="contact.html" class="hover:underline text-yellow-400">Contact</a>
+    </nav>
+    <a href="interviews.html" class="px-4 py-2 border border-white rounded-lg hover:bg-white hover:text-black transition">Get Started</a>
+  </header>
+
+  <!-- Contact Section -->
+  <section class="flex flex-col items-center justify-center min-h-screen px-6 text-center">
+    <div class="bg-white text-black rounded-2xl shadow-2xl max-w-xl w-full p-8 transition transform hover:scale-[1.02]">
+      <h2 class="text-3xl font-bold mb-2 text-gray-800">Contact Us</h2>
+      <p class="mb-6 text-gray-600">
+        Have a question or suggestion? Send us a message, and we’ll get back to you shortly!
+      </p>
+      <form id="contactForm" class="space-y-5">
+        <div class="text-left">
+          <label for="name" class="block text-sm font-medium text-gray-700">Your Name</label>
+          <input type="text" id="name" name="name" class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition" placeholder="John Doe" required>
+        </div>
+        <div class="text-left">
+          <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
+          <input type="email" id="email" name="email" class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition" placeholder="example@mail.com" required>
+        </div>
+        <div class="text-left">
+          <label for="message" class="block text-sm font-medium text-gray-700">Message</label>
+          <textarea id="message" name="message" rows="4" class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition" placeholder="Write your message here..." required></textarea>
+        </div>
+        <button type="submit" class="w-full bg-blue-600 text-white p-3 rounded-lg shadow-lg hover:bg-blue-700 hover:shadow-xl transition transform hover:scale-[1.01]">
+          <i class="fas fa-paper-plane mr-2"></i> Send Message
         </button>
-        <section class="bg-white p-6 rounded-lg shadow-lg">
-            <h2 class="text-2xl font-bold mb-4">Contact Us</h2>
-            <p class="mb-4">We'd love to hear from you! Whether you have a question about features, pricing, need a demo, or anything else, our team is ready to answer all your questions.</p>
-            <form id="contactForm" class="space-y-4">
-                <div>
-                    <label for="name" class="block text-sm font-medium text-gray-700">Your Name</label>
-                    <input type="text" id="name" name="name" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
-                </div>
-                <div>
-                    <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
-                    <input type="email" id="email" name="email" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
-                </div>
-                <div>
-                    <label for="message" class="block text-sm font-medium text-gray-700">Message</label>
-                    <textarea id="message" name="message" rows="4" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required></textarea>
-                </div>
-                <button type="submit" class="w-full bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700">Send Message</button>
-            </form>
-        </section>
+      </form>
     </div>
+  </section>
 
-    <script>
-        const menuButton = document.getElementById('menu-button');
-        const backButton = document.getElementById('back-button');
-        const sidebar = document.getElementById('sidebar');
-        const contactForm = document.getElementById('contactForm');
+  <!-- Popup Modal -->
+  <div id="popup" class="hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+    <div class="bg-white text-black rounded-xl shadow-xl p-6 max-w-sm w-full text-center">
+      <div id="popup-icon" class="text-5xl mb-4"></div>
+      <h3 id="popup-title" class="text-xl font-bold mb-2"></h3>
+      <p id="popup-message" class="text-gray-600 mb-4"></p>
+      <button onclick="closePopup()" class="bg-pink-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">OK</button>
+    </div>
+  </div>
 
-        menuButton.addEventListener('click', () => {
-            sidebar.classList.toggle('sidebar-hidden');
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-gray-400 text-center py-6">
+    <p>&copy; 2025 AI Interview App. All rights reserved.</p>
+  </footer>
+
+  <!-- Watermark -->
+  <div class="watermark">@Harshvardhan</div>
+
+  <script>
+    const contactForm = document.getElementById('contactForm');
+    const popup = document.getElementById('popup');
+    const popupTitle = document.getElementById('popup-title');
+    const popupMessage = document.getElementById('popup-message');
+    const popupIcon = document.getElementById('popup-icon');
+
+    function showPopup(type, title, message) {
+      popupTitle.textContent = title;
+      popupMessage.textContent = message;
+      if (type === 'success') {
+        popupIcon.innerHTML = '<i class="fas fa-check-circle text-green-500"></i>';
+      } else {
+        popupIcon.innerHTML = '<i class="fas fa-exclamation-circle text-red-500"></i>';
+      }
+      popup.classList.remove('hidden');
+    }
+
+    function closePopup() {
+      popup.classList.add('hidden');
+    }
+
+    contactForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const formData = new FormData(contactForm);
+
+      try {
+        const response = await fetch("https://script.google.com/macros/s/AKfycbyrjh1JBEoLdA9drTaMkARPdsij3ynrTs4NqARyzJFBerku2-nSK2VpCW5HX5OQRwBW/exec", {
+          method: "POST",
+          body: formData,
         });
 
-        backButton.addEventListener('click', () => {
-            sidebar.classList.add('sidebar-hidden');
-        });
-
-        // Handle form submission with a popup message
-        contactForm.addEventListener('submit', async (event) => {
-            event.preventDefault(); // Prevent default form submission
-
-            const formData = new FormData(contactForm);
-
-            try {
-                const response = await fetch("https://script.google.com/macros/s/AKfycbyrjh1JBEoLdA9drTaMkARPdsij3ynrTs4NqARyzJFBerku2-nSK2VpCW5HX5OQRwBW/exec", {
-                    method: "POST",
-                    body: formData,
-                });
-
-                const result = await response.text();
-                if (response.ok && result.trim() === "Success") {
-                    alert("Thank you for contacting!");
-                    contactForm.reset(); // Reset the form
-                } else {
-                    alert("Something went wrong: " + result);
-                }
-            } catch (error) {
-                alert("Error: " + error.message);
-            }
-        });
-    </script>
-
-    <div class="watermark">@Harshvardhan</div>
+        const result = await response.text();
+        if (response.ok && result.trim() === "Success") {
+          showPopup('success', 'Message Sent!', 'Thank you for contacting us. We will get back to you soon.');
+          contactForm.reset();
+        } else {
+          showPopup('error', 'Error', 'Something went wrong: ' + result);
+        }
+      } catch (error) {
+        showPopup('error', 'Error', 'Unable to send message. ' + error.message);
+      }
+    });
+  </script>
 </body>
 </html>
